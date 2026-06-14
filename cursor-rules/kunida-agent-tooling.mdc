@@ -1,0 +1,54 @@
+---
+description: Kunida repo agent tooling contract
+alwaysApply: true
+---
+
+# Kunida Agent Tooling Contract
+<!-- kunida-managed-agent-bridge:v2 -->
+
+Start with `AGENTS.md`, `docs/AGENT-CONTEXT.md`, and `docs/tooling/CONTEXT-ROUTING.md`. Then load only the task-specific lane or runbook selected by context routing. Repo-local facts override this generic rule.
+
+Use agentic/edit/apply modes only inside the approved repo scope. Do not change production sites, forms, DNS, deployments, conversion mappings, protected settings, paid services, or destructive filesystem/git state unless the repo source of truth and owner request explicitly authorize it.
+
+Keep secrets, .env files, credentials, local agent history, uploads, backups, generated QA output, runtime caches, and dependency/build output out of prompts, indexes, screenshots, logs, and commits.
+
+Do not claim live, online, SERP, competitor, or current market research unless the output names the exact query/tool/artifact, source URLs, and retrieval date. If only repo docs were read, say that plainly and label current-market claims unverified.
+
+Before staging, classify `git status -sb`; use `git add -A` only after the dirty tree contains intentional safe changes, otherwise stage scoped paths and report the blocker.
+
+19 | Do not edit generated agent bridge files for self-correction. Durable agent-rule changes belong in the Rules Network templates and checks.
+
+## Tool‑use rule
+
+When using Cline file search tools, always provide every required argument.
+
+**search_files** must include:
+- `path`: the directory to search
+- `regex`: a valid search pattern string (non‑empty)
+
+Never call **search_files** with an empty regex. If unsure, use a simple broad regex such as `.*` or fall back to terminal ripgrep:
+
+```bash
+rg -n "search term" path/to/dir
+```
+
+If a tool call fails due to missing parameters, do **not** retry the same malformed call. Correct the arguments or switch to a terminal command.
+
+**Robust fallback:** Prefer `rg` from the terminal for repository searches when the internal `search_files` tool fails.
+
+Examples:
+```bash
+rg -n "SOC 2" wordpress/compliance-cro-pages
+rg -n "\"id\": \"cmmc-nist-readiness-it-support\"" wordpress/compliance-cro-pages/manifest.json
+rg -n "parent_slug" wordpress/compliance-cro-pages/manifest.json
+```
+
+Use this before a task:
+```
+Use robust tool calling.
+When searching files:
+  - Use rg unless internal search is clearly safer.
+  - If using search_files, always provide a non‑empty regex.
+  - Do not retry a failed tool call with the same missing arguments.
+  - If a tool call fails twice, switch to terminal commands.
+```

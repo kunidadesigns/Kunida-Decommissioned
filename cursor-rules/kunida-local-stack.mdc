@@ -1,0 +1,17 @@
+---
+description: Kunida local AI stack (Ollama, LM Studio, Onyx, RAGFlow, Open WebUI, Open Design) — use kunida-stack CLI
+globs:
+  - scripts/integrations/**
+  - scripts/gpu/**
+  - docker/**
+  - docs/tooling/**
+---
+
+When working on local AI, RAG, or Docker stacks for this network:
+
+1. Run `node scripts/integrations/kunida-stack.mjs status` before heavy jobs.
+2. Browser UI: Onyx http://localhost:3000 · RAGFlow http://localhost:8081 (not :9380 for UI) · Open WebUI http://localhost:8082 · Open Design http://localhost:7456.
+3. LM Studio is optional; use `node scripts/integrations/kunida-stack.mjs lmstudio status` to find the working WSL URL before setting `KUNIDA_LLM_BASE_URL`.
+4. CLI Q&A over Faiss: `kunida-stack.mjs ask "question"` or `scripts/gpu/ask-network.py`.
+5. Do not commit `docker/*/.env` or `docker/ragflow/service_conf.yaml`.
+6. Owner auth (Onyx admin, RAGFlow signup) is manual — see `docs/tooling/POST-BRINGUP-CHECKLIST.md`.

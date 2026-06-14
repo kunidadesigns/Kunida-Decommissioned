@@ -1,0 +1,21 @@
+---
+description: Workspace theme governance for Cursor / VS Code chrome colors
+globs:
+  - .vscode/settings.json
+  - config/workspace-theme-registry.json
+  - scripts/integrations/workspace-theme-governor.mjs
+  - docs/tooling/WORKSPACE-THEME-GOVERNANCE.md
+---
+
+Before changing workspace theme or chrome colors:
+
+1. Read `docs/tooling/WORKSPACE-THEME-GOVERNANCE.md`.
+2. Treat `config/workspace-theme-registry.json` as the source of truth.
+3. Keep profiles dark and neutral; do not put `workbench.colorCustomizations`
+   in user/profile settings.
+4. Put title bar, Activity Bar, and status bar colors in the registered
+   workspace palette only.
+5. Use `node scripts/integrations/kunida-stack.mjs workspace-theme --fix --target <id>`
+   to repair drift, then rerun without `--fix`.
+
+No two registered workspaces may share the same bar/accent signature.
